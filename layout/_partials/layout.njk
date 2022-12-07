@@ -72,25 +72,30 @@
         </g>
       </svg>
     </div>
-    <main>
-      <div class="inner">
-        <div id="main" class="pjax">
-          {% block content %}{% endblock %}
+
+    <div id="bgpic">
+      <div id="mask"></div>
+      <main>
+        <div class="inner">
+          <div id="main" class="pjax">
+            {% block content %}{% endblock %}
+          </div>
+          <div id="sidebar">
+            {% block sidebar %}{{ sidebar.render() }}{% endblock %}
+          </div>
+          <div class="dimmer"></div>
         </div>
-        <div id="sidebar">
-          {% block sidebar %}{{ sidebar.render() }}{% endblock %}
+      </main>
+      <footer id="footer">
+        <div class="inner">
+          <div class="widgets">
+            {{ widgets.render() }}
+          </div>
+          {{ partial('_partials/footer.njk', {}, {cache: true}) }}
         </div>
-        <div class="dimmer"></div>
-      </div>
-    </main>
-    <footer id="footer">
-      <div class="inner">
-        <div class="widgets">
-          {{ widgets.render() }}
-        </div>
-        {{ partial('_partials/footer.njk', {}, {cache: true}) }}
-      </div>
-    </footer>
+      </footer>
+    </div>
+
   </div>
 
 {%- set ccIcon = '<i class="ic i-creative-commons"></i>' %}
@@ -143,6 +148,7 @@
 </script>
 
 <script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/GardenHamster/live2d-widget@latest/autoload.js"></script>
 
 {{ _vendor_js() }}
 
