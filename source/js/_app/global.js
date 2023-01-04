@@ -21,38 +21,38 @@ var oWinWidth = window.innerWidth;
 var LOCAL_HASH = 0, LOCAL_URL = window.location.href;
 var pjax;
 const lazyload = lozad('img, [data-background-image]', {
-    loaded: function(el) {
-        el.addClass('lozaded');
-    }
+  loaded: function (el) {
+    el.addClass('lozaded');
+  }
 })
 
 const Loader = {
   timer: null,
   lock: false,
-  show: function() {
+  show: function () {
     clearTimeout(this.timer);
     document.body.removeClass('loaded');
     loadCat.attr('style', 'display:block');
     Loader.lock = false;
   },
-  hide: function(sec) {
-    if(!CONFIG.loader.start)
+  hide: function (sec) {
+    if (!CONFIG.loader.start)
       sec = -1
-    this.timer = setTimeout(this.vanish, sec||3000);
+    this.timer = setTimeout(this.vanish, sec || 1000);
   },
-  vanish: function() {
-    if(Loader.lock)
+  vanish: function () {
+    if (Loader.lock)
       return;
-    if(CONFIG.loader.start)
+    if (CONFIG.loader.start)
       transition(loadCat, 0)
     document.body.addClass('loaded');
     Loader.lock = true;
   }
 }
 
-const changeTheme = function(type) {
+const changeTheme = function (type) {
   var btn = $('.theme .ic')
-  if(type == 'dark') {
+  if (type == 'dark') {
     HTML.attr('data-theme', type);
     btn.removeClass('i-sun')
     btn.addClass('i-moon')
@@ -63,16 +63,16 @@ const changeTheme = function(type) {
   }
 }
 
-const changeMetaTheme = function(color) {
-  if(HTML.attr('data-theme') == 'dark')
+const changeMetaTheme = function (color) {
+  if (HTML.attr('data-theme') == 'dark')
     color = '#222'
 
   $('meta[name="theme-color"]').attr('content', color);
 }
 
 const themeColorListener = function () {
-  window.matchMedia('(prefers-color-scheme: dark)').addListener(function(mediaQueryList) {
-    if(mediaQueryList.matches){
+  window.matchMedia('(prefers-color-scheme: dark)').addListener(function (mediaQueryList) {
+    if (mediaQueryList.matches) {
       changeTheme('dark');
     } else {
       changeTheme();
@@ -80,15 +80,15 @@ const themeColorListener = function () {
   });
 
   var t = store.get('theme');
-  if(t) {
+  if (t) {
     changeTheme(t);
   } else {
-    if(CONFIG.darkmode) {
+    if (CONFIG.darkmode) {
       changeTheme('dark');
     }
   }
 
-  $('.theme').addEventListener('click', function(event) {
+  $('.theme').addEventListener('click', function (event) {
     var btn = event.currentTarget.child('.ic')
 
     var neko = BODY.createChild('div', {
@@ -96,62 +96,62 @@ const themeColorListener = function () {
       innerHTML: '<div class="planet"><div class="sun"></div><div class="moon"></div></div><div class="body"><div class="face"><section class="eyes left"><span class="pupil"></span></section><section class="eyes right"><span class="pupil"></span></section><span class="nose"></span></div></div>'
     });
 
-    var hideNeko = function() {
-        transition(neko, {
-          delay: 2500,
-          opacity: 0
-        }, function() {
-          BODY.removeChild(neko)
-        });
+    var hideNeko = function () {
+      transition(neko, {
+        delay: 2500,
+        opacity: 0
+      }, function () {
+        BODY.removeChild(neko)
+      });
     }
 
-    if(btn.hasClass('i-sun')) {
-      var c = function() {
-          neko.addClass('dark');
-          changeTheme('dark');
-          store.set('theme', 'dark');
-          hideNeko();
-        }
+    if (btn.hasClass('i-sun')) {
+      var c = function () {
+        neko.addClass('dark');
+        changeTheme('dark');
+        store.set('theme', 'dark');
+        hideNeko();
+      }
     } else {
       neko.addClass('dark');
-      var c = function() {
-          neko.removeClass('dark');
-          changeTheme();
-          store.set('theme', 'light');
-          hideNeko();
-        }
+      var c = function () {
+        neko.removeClass('dark');
+        changeTheme();
+        store.set('theme', 'light');
+        hideNeko();
+      }
     }
-    transition(neko, 1, function() {
+    transition(neko, 1, function () {
       setTimeout(c, 210)
     })
   });
 }
 
 const visibilityListener = function () {
-  document.addEventListener('visibilitychange', function() {
-    switch(document.visibilityState) {
+  document.addEventListener('visibilitychange', function () {
+    switch (document.visibilityState) {
       case 'hidden':
         $('[rel="icon"]').attr('href', statics + CONFIG.favicon.hidden);
         document.title = LOCAL.favicon.hide;
-        if(CONFIG.loader.switch)
+        if (CONFIG.loader.switch)
           Loader.show()
         clearTimeout(titleTime);
-      break;
+        break;
       case 'visible':
         $('[rel="icon"]').attr('href', statics + CONFIG.favicon.normal);
         document.title = LOCAL.favicon.show;
-        if(CONFIG.loader.switch)
+        if (CONFIG.loader.switch)
           Loader.hide(1000)
         titleTime = setTimeout(function () {
           document.title = originTitle;
         }, 2000);
-      break;
+        break;
     }
   });
 }
 
-const showtip = function(msg) {
-  if(!msg)
+const showtip = function (msg) {
+  if (!msg)
     return
 
   var tipbox = BODY.createChild('div', {
@@ -159,9 +159,9 @@ const showtip = function(msg) {
     className: 'tip'
   });
 
-  setTimeout(function() {
+  setTimeout(function () {
     tipbox.addClass('hide')
-    setTimeout(function() {
+    setTimeout(function () {
       BODY.removeChild(tipbox);
     }, 300);
   }, 3000);
@@ -172,7 +172,7 @@ const resizeHandle = function (event) {
   headerHightInner = siteHeader.height();
   headerHight = headerHightInner + $('#waves').height();
 
-  if(oWinWidth != window.innerWidth)
+  if (oWinWidth != window.innerWidth)
     sideBarToggleHandle(null, 1);
 
   oWinHeight = window.innerHeight;
@@ -230,38 +230,38 @@ const scrollHandle = function (event) {
   $('.percent').width(scrollPercent);
 }
 
-const pagePosition = function() {
-  if(CONFIG.auto_scroll)
+const pagePosition = function () {
+  if (CONFIG.auto_scroll)
     store.set(LOCAL_URL, scrollAction.y)
 }
 
-const positionInit = function(comment) {
+const positionInit = function (comment) {
   var anchor = window.location.hash
   var target = null;
-  if(LOCAL_HASH) {
+  if (LOCAL_HASH) {
     store.del(LOCAL_URL);
     return
   }
 
-  if(anchor)
+  if (anchor)
     target = $(decodeURI(anchor))
   else {
     target = CONFIG.auto_scroll ? parseInt(store.get(LOCAL_URL)) : 0
   }
 
-  if(target) {
+  if (target) {
     pageScroll(target);
     LOCAL_HASH = 1;
   }
 
-  if(comment && anchor && !LOCAL_HASH) {
+  if (comment && anchor && !LOCAL_HASH) {
     pageScroll(target);
     LOCAL_HASH = 1;
   }
 
 }
 
-const clipBoard = function(str, callback) {
+const clipBoard = function (str, callback) {
   var ta = BODY.createChild('textarea', {
     style: {
       top: window.scrollY + 'px', // Prevent page scrolling
