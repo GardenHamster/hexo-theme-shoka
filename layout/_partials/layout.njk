@@ -150,15 +150,13 @@
 <script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
 <script src="/live2d-web/live2d-web.js"></script>
 <script>
-  if (document.addEventListener){
-      document.addEventListener("DOMContentLoaded", function(){
-        console.log('DOMContentLoaded');
-          if(screen.width < 768) return;
-          initLive2d({
-            live2d_path: '/live2d-web/',
-            model_path: '/live2d-web/model/'
-          });
-    }, false);
+  window.onBlogLoaded = function(){
+    console.log('onBlogLoaded');
+    if(screen.width < 768) return;
+      initLive2d({
+        live2d_path: '/live2d-web/',
+        model_path: '/live2d-web/model/'
+      });
   }
 </script>
 
