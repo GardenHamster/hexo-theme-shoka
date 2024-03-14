@@ -96,11 +96,6 @@ const siteRefresh = function (reload) {
     positionInit()
   }, 500);
 
-
-  setTimeout(function () {
-    if (window.onBlogLoaded) window.onBlogLoaded();
-  }, 1000);
-
   cardActive()
 
   lazyload.observe()
@@ -142,6 +137,12 @@ const siteInit = function () {
   })
 
   siteRefresh(1)
+
+  setTimeout(function () {
+    if (window.live2dLoaded) return;
+    if (window.onBlogLoaded) window.onBlogLoaded();
+    window.live2dLoaded = true;
+  }, 1000);
 }
 
 window.addEventListener('DOMContentLoaded', siteInit);
