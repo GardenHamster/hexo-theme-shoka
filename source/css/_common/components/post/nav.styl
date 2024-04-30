@@ -2,13 +2,15 @@
   display: flex;
   margin-bottom: 2.5rem;
   padding: 0 1.25rem;
-
+  
   +mobile() {
     flex-direction: column;
   }
 
   .item {
     width: 50%;
+    min-height: 200px;
+  
     +mobile() {
       width: 100%;
     }
@@ -20,6 +22,7 @@
       color: var(--header-text-color);
       padding: 1.25rem 2.5rem;
       background-size: cover;
+      background-position: 50% 50%;
       position: relative;
 
       &::before {
