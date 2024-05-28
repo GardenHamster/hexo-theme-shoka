@@ -73,28 +73,32 @@
       </svg>
     </div>
 
-    <div id="bgpic">
-      <div id="mask"></div>
-      <main>
-        <div class="inner">
-          <div id="main" class="pjax">
-            {% block content %}{% endblock %}
+  <div style="background:white;">
+      {%- set randomBackground = _background(page) %}
+      <div id="bgpic" style="background: {{ randomBackground.background }};background-repeat:repeat-y;background-attachment:fixed;">
+        <div id="mask" style="opacity:{{randomBackground.opacity}}"></div>
+        <main>
+          <div class="inner">
+            <div id="main" class="pjax">
+              {% block content %}{% endblock %}
+            </div>
+            <div id="sidebar">
+              {% block sidebar %}{{ sidebar.render() }}{% endblock %}
+            </div>
+            <div class="dimmer"></div>
           </div>
-          <div id="sidebar">
-            {% block sidebar %}{{ sidebar.render() }}{% endblock %}
+        </main>
+        <footer id="footer">
+          <div class="inner">
+            <div class="widgets">
+              {{ widgets.render() }}
+            </div>
+            {{ partial('_partials/footer.njk', {}, {cache: true}) }}
           </div>
-          <div class="dimmer"></div>
-        </div>
-      </main>
-      <footer id="footer">
-        <div class="inner">
-          <div class="widgets">
-            {{ widgets.render() }}
-          </div>
-          {{ partial('_partials/footer.njk', {}, {cache: true}) }}
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
+
 
   </div>
 
