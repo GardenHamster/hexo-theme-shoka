@@ -41,7 +41,7 @@ hexo.extend.filter.register('before_generate', () => {
     hexo.theme.config.image_list = yaml.load(fs.readFileSync(path.join(__dirname, '../../_images.yml')))
   }
 
-  if (data.backgrounds && data.backgrounds.length > 6) {
+  if (data.backgrounds && data.backgrounds.length > 0) {
     hexo.theme.config.background_list = data.backgrounds
   } else {
     hexo.theme.config.background_list = yaml.load(fs.readFileSync(path.join(__dirname, '../../_backgrounds.yml')))
